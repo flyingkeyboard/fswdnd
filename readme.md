@@ -27,7 +27,9 @@ pip3 install psycopg2
 Ensure a Postgres database called 'news' is created before running steps below:
 
 Download the newdata.sql in 
-https://classroom.udacity.com/nanodegrees/nd004/parts/51200cee-6bb3-4b55-b469-7d4dd9ad7765/modules/c57b57d4-29a8-4c5f-9bb8-5d53df3e48f4/lessons/bc938915-0f7e-4550-a48f-82241ab649e3/concepts/a9cf98c8-0325-4c68-b972-58d5957f1a91
+
+https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip
+
 
 Use the psql command to create the three required tables:
 
