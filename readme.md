@@ -1,8 +1,8 @@
 
 ### Project Name: News Website Logs Analysis Statistics ...
-This project sets up a **PostgreSQL** database for a **news** website...
+This project sets up a **PostgreSQL** database for a **news** website.
 The provided Python script **log_analysis.py*** uses the **psycopg2** library to query 
-the database and produce a report that answers the following questions
+the database and produce a report that answers the following questions:
 
 What are the most popular three articles of all time?
 What are the most popular articles author of all time?
@@ -13,16 +13,23 @@ On which days did more than 1% of requests lead to errors?
 Below are the three software components required by this project:
 
 - Python3
-- PostgreSQL Database and client library 'psql'
+- PostgreSQL Database and client command program 'psql'
 - psycopg2 library
 
+### How to setup the Pythyon environment
+
+**perform the following pip install**
+
+pip3 install psycopg2
+
 ### How to setup the database
+
+Ensure a Postgres database called 'news' is created before running below steps:
 
 Download the newdata.sql in 
 https://classroom.udacity.com/nanodegrees/nd004/parts/51200cee-6bb3-4b55-b469-7d4dd9ad7765/modules/c57b57d4-29a8-4c5f-9bb8-5d53df3e48f4/lessons/bc938915-0f7e-4550-a48f-82241ab649e3/concepts/a9cf98c8-0325-4c68-b972-58d5957f1a91
 
 Use the psql command to create the three required tables:
-
 
 psql -d news -f newsdata.sql.
 Here's what this command does:
@@ -33,30 +40,35 @@ psql — the PostgreSQL command line program
 
 
 
-### Database Tables Definitions
+### Database Tables Definition
 
-The authors table includes information about the authors of articles.
-The articles table includes the articles themselves.
-The log table includes one entry for each time a user has accessed the site.
+The schema consists of three tables:
+
+The **authors** table includes information about the authors of articles.
+The **articles** table includes the articles themselves.
+The **log** table includes one entry for each time a user has accessed the site.
 
 
 
 ### Design
 
-Design
+This program is compose of the main program and three functions:
 
-This program is compose of the main program and three functions.  
-The main program connects to the database, get the cursor object from the connection.  Call three functions in sequence and passed the cursor objec to the function.
-The three functions execute the SQL statement display the result.
+The main program connects to the database, get the cursor object from the connection object.  Call each of the three functions in sequence by passing in the cursor object to the function.
+
+When each function is called, it calls the execute function in the cursor object to run the supplied SQL statement.  Once the query result is received, it loops through the result and display the output using the approriate string formatter for all columns.
+
 
 
 ### How to run the log analysis process
+
+**Running the script**
 
 To run this script and pipe results to the output.txt
 
 Two ways:
 
-python log_analysis.py > output.txt
+python3 log_analysis.py > output.txt
 
 or 
 
