@@ -24,15 +24,16 @@ pip3 install psycopg2
 
 ### How to setup the database
 
-Ensure a Postgres database called 'news' is created before running below steps:
+Ensure a Postgres database called 'news' is created before running steps below:
 
 Download the newdata.sql in 
 https://classroom.udacity.com/nanodegrees/nd004/parts/51200cee-6bb3-4b55-b469-7d4dd9ad7765/modules/c57b57d4-29a8-4c5f-9bb8-5d53df3e48f4/lessons/bc938915-0f7e-4550-a48f-82241ab649e3/concepts/a9cf98c8-0325-4c68-b972-58d5957f1a91
 
 Use the psql command to create the three required tables:
 
-psql -d news -f newsdata.sql.
-Here's what this command does:
+psql -d news -f newsdata.sql
+
+**Here's what this command does**
 
 psql — the PostgreSQL command line program
 -d news — connect to the database named news 
@@ -45,8 +46,53 @@ psql — the PostgreSQL command line program
 The schema consists of three tables:
 
 The **authors** table includes information about the authors of articles.
+
+                         Table "public.authors"
+ Column |  Type   |                      Modifiers                       
+--------+---------+------------------------------------------------------
+ name   | text    | not null
+ bio    | text    | 
+ id     | integer | not null default nextval('authors_id_seq'::regclass)
+Indexes:
+    "authors_pkey" PRIMARY KEY, btree (id)
+Referenced by:
+    TABLE "articles" CONSTRAINT "articles_author_fkey" FOREIGN KEY (author) REFERENCES authors(id)
+
+
+
+
 The **articles** table includes the articles themselves.
+
+                                  Table "public.articles"
+ Column |           Type           |                       Modifiers                       
+--------+--------------------------+-------------------------------------------------------
+ author | integer                  | not null
+ title  | text                     | not null
+ slug   | text                     | not null
+ lead   | text                     | 
+ body   | text                     | 
+ time   | timestamp with time zone | default now()
+ id     | integer                  | not null default nextval('articles_id_seq'::regclass)
+Indexes:
+    "articles_pkey" PRIMARY KEY, btree (id)
+    "articles_slug_key" UNIQUE CONSTRAINT, btree (slug)
+Foreign-key constraints:
+    "articles_author_fkey" FOREIGN KEY (author) REFERENCES authors(id)
+
 The **log** table includes one entry for each time a user has accessed the site.
+
+
+                                  Table "log"
+ Column |           Type           |                    Modifiers                     
+--------+--------------------------+--------------------------------------------------
+ path   | text                     | 
+ ip     | inet                     | 
+ method | text                     | 
+ status | text                     | 
+ time   | timestamp with time zone | default now()
+ id     | integer                  | not null default nextval('log_id_seq'::regclass)
+Indexes:
+    "log_pkey" PRIMARY KEY, btree (id)
 
 
 
@@ -84,5 +130,5 @@ Below is the view definition used by query 2:
 create view v_author_articles_access as 
 SELECT au.name,art.title,art.slug,l.method,l.status,l.id
 from articles art join authors au on art.author = au.id
-left join log l on substring(l.path,10)=art.slug
-where l.id is not null
+join log l on l.path = CONCAT('/article/', art.slug) 
+ 
