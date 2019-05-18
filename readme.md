@@ -16,6 +16,12 @@ Below are the three software components required by this project:
 - PostgreSQL Database and client command program 'psql'
 - psycopg2 library
 
+### How to setup the Pythyon environment
+
+**perform the following pip install**
+
+pip3 install psycopg2
+
 ### How to setup the database
 
 Ensure a Postgres database called 'news' is created before running below steps:
@@ -46,30 +52,23 @@ The **log** table includes one entry for each time a user has accessed the site.
 
 ### Design
 
-This program is compose of the main program and three functions.  
+This program is compose of the main program and three functions:
 
-**main**
+The main program connects to the database, get the cursor object from the connection object.  Call each of the three functions in sequence by passing in the cursor object to the function.
 
-The main program connects to the database, get the cursor object from the connection object.  Call each of the three functions in sequence.
+When each function is called, it calls the execute function in the cursor object to run the supplied SQL statement.  Once the query result is received, it loops through the result and display the output using the approriate string formatter for all columns.
 
-
-**get_three_most_popular_articles function**
-**get_most_popular_author function**
-**get_days_with_onepc_failed function**
-
-**
-On each function call the main program passes the cursor object to the function.
-The function executes the embedded SQL statement using the execute() function from the curson object.
-display the result.
 
 
 ### How to run the log analysis process
+
+**Running the script**
 
 To run this script and pipe results to the output.txt
 
 Two ways:
 
-python log_analysis.py > output.txt
+python3 log_analysis.py > output.txt
 
 or 
 
